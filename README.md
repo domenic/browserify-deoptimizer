@@ -21,7 +21,8 @@ var bundle = browserify();
 bundle.alias("jquery", "jquery-browserify");
 bundle.addEntry("start.js");
 
-var deoptimized = deoptimize(bundle);
+var baseDirectory = process.cwd(); // module IDs will be determined relative to this
+var deoptimized = deoptimize(bundle, baseDirectory);
 ```
 
 Your `deoptimized` variable will then look something like this:

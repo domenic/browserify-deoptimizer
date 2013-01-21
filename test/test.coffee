@@ -19,6 +19,7 @@ fixtureText = (fileName) => fs.readFileSync(fixturePath(fileName))
 wrapped = (moduleId, body) => new BrowserifyWrap({}).wrap(moduleId, body)
 wrappedFixture = (fileName) => wrapped(fixtureId(fileName), fixtureText(fileName))
 wrappedOther = (moduleId) => wrapped(moduleId, fs.readFileSync(moduleId.substring(1)))
+wrappedWithSpecificId = (moduleId, fileName) => wrapped(moduleId, fs.readFileSync(fileName))
 
 describe "With a simple entry file that `require`s another file", =>
     deoptimized = null
@@ -164,3 +165,19 @@ describe "With prepends", =>
         preludeContents = deoptimized["browserify-prelude.js"]
 
         expect(preludeContents).to.match(/^var x = 5;/)
+
+describe "With a specific baseDir", =>
+    deoptimized = null
+
+    beforeEach =>
+        bundle = browserify()
+        bundle.addEntry(fixturePath("requires1.js"))
+
+        deoptimized = deoptimize(bundle, __dirname)
+
+    it "should include the entry file and its dependent with a key relative to the baseDir", =>
+        requires1Contents = wrappedWithSpecificId("/fixtures/requires1.js", fixturePath("requires1.js"))
+        expect(deoptimized).to.have.property("fixtures/requires1.js").that.equals(requires1Contents)
+
+        oneContents = wrappedWithSpecificId("/fixtures/1.js", fixturePath("1.js"))
+        expect(deoptimized).to.have.property("fixtures/1.js").that.equals(oneContents)
