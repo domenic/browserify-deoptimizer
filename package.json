@@ -20,7 +20,7 @@
         "lint": "jshint lib"
     },
     "dependencies": {
-        "browserify": ">= 1.16.3 < 2",
+        "browserify": ">= 1.17.2 < 2",
         "underscore": ">= 1.4.2"
     },
     "devDependencies": {

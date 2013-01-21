@@ -53,17 +53,6 @@ describe "With a simple entry file that `require`s another file", =>
     it "should not contain a browserify-aliases.js file", =>
         expect(deoptimized).not.to.have.property("browserify-aliases.js")
 
-    it "should have the vm module, broken up into files", =>
-        vmBrowserifyPath = path.resolve(__dirname, "../node_modules/browserify/node_modules/vm-browserify/index.js")
-        vmBrowserifyText = fs.readFileSync(vmBrowserifyPath).toString()
-        vmFiles =
-            "vm": 'module.exports = require("vm-browserify")'
-            "/node_modules/browserify/node_modules/vm-browserify/package.json": 'module.exports = {"main":"index.js"}'
-            "/node_modules/browserify/node_modules/vm-browserify/index.js": vmBrowserifyText
-
-        for moduleId, unwrappedText of vmFiles
-            expect(deoptimized).to.have.property(keyFromId(moduleId)).that.equals(wrapped(moduleId, unwrappedText))
-
 describe "With an entry file that `require`s the assert module", =>
     deoptimized = null
 

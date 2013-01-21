@@ -29,9 +29,6 @@ Your `deoptimized` variable will then look something like this:
 ```js
 {
   "browserify-prelude.js": 'var require = function (file, …',
-  "vm": 'require.define("vm",function(r…',
-  "node_modules/browserify/node_modules/vm-browserify/package.json": 'require.define("/node_modules/…',
-  "node_modules/browserify/node_modules/vm-browserify/index.js": 'require.define("/node_modules/…',
   "node_modules/jquery-browserify/package.json": 'require.define("/node_modules/…',
   "node_modules/jquery-browserify/index.js": 'require.define("/node_modules/…',
   "browserify-aliases.js": 'require.alias("jquery-browseri…',
