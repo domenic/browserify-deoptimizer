@@ -17,7 +17,7 @@ big string with `bundle.bundle()`, you just deoptimize it!
 var browserify = require("browserify");
 var deoptimize = require("browserify-deoptimizer");
 
-var bundle = browserify({ cache: true });
+var bundle = browserify();
 bundle.alias("jquery", "jquery-browserify");
 bundle.addEntry("start.js");
 
